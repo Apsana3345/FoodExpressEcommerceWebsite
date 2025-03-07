@@ -5,101 +5,157 @@ import { ShopContext } from "../../context/ShopContext";
 
 const NavRight = () => {
   const [visible, setVisible] = useState(false);
-  const {setShowSearch,getCartCount,navigate,token,setToken,setCartItems}=useContext(ShopContext);
+  const { setShowSearch, getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext);
+
   const logout = () => {
-    
     localStorage.removeItem('token');
     navigate('/login');
     setToken("");
     setCartItems({});
   };
 
-
+  // Navigation Links for mobile menu
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
+    { path: "/contact", label: "Contact" },
+    { path: "/collection", label: "Menu" },
+  ];
 
   return (
     <>
-      <div className="flex items-center gap-3 sm:gap-8">
-        <img   onClick={()=>setShowSearch(true)} src={assets.img16} className="w-3 sm:w-6  cursor-pointer" alt="" />
-        <div className="group relative">
-         {/* <Link to='/login'> */}
-         
-         {/* Dropdown menu */}
-          <img onClick={()=>token ? null :navigate('/login')} className="w-3 sm:w-6   cursor-pointer" src={assets.profileicon} alt="" />
-          
-          {/* </Link> */}
-          {token &&
-           <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-20">
-            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded ">
-              <p className="cursor-pointer hover:text-black ">My Profile</p>
-              <p  onClick={() => {
-                              navigate("/orders");
-                              // setDropdownOpen(false);
-                            }} className="cursor-pointer hover:text-black  ">Orders</p>
-              <p  
-onClick={logout}
+      <div className="flex items-center gap-4 sm:gap-8">
+        {/* Search Icon */}
+        <button 
+          onClick={() => setShowSearch(true)}
+          className="hover:opacity-75 transition-opacity duration-200"
+        >
+          <img src={assets.img16} className="w-5 sm:w-6 cursor-pointer" alt="Search" />
+        </button>
 
-              className="cursor-pointer hover:text-black"> Logout</p>
+        {/* Profile Section */}
+        <div className="relative group">
+          <button 
+            onClick={() => token ? null : navigate('/login')}
+            className="hover:opacity-75 transition-opacity duration-200"
+          >
+            <img className="w-5 sm:w-6 cursor-pointer" src={assets.profileicon} alt="Profile" />
+          </button>
+
+          {/* Profile Dropdown */}
+          {token && (
+            <div className="absolute right-0 pt-4 z-50 hidden group-hover:block">
+              <div className="bg-white rounded-lg shadow-lg py-2 w-48 border border-gray-100">
+                <div className="px-4 py-2 border-b border-gray-100">
+                  <p className="text-sm text-gray-500">Welcome!</p>
+                </div>
+                <div className="py-1">
+                  <button 
+                    className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    My Profile
+                  </button>
+                  <button 
+                    className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                    onClick={() => navigate("/orders")}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    Orders
+                  </button>
+                  <button 
+                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                    onClick={logout}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>}
+          )}
         </div>
 
-        <Link to="/cart" className="relative">
-          <img src={assets.carticon} className="w-3 sm:w-6  min-w-3" />
-          <p className="absolute right-[-5px] top-[-7px] w-3 text-center leading-3 bg-[#0D7A57] text-white aspect-square rounded-full text-[7px]">
-          {getCartCount()}
-          </p>
+        {/* Cart Icon */}
+        <Link to="/cart" className="relative hover:opacity-75 transition-opacity duration-200">
+          <img src={assets.carticon} className="w-5 sm:w-6" alt="Cart" />
+          {getCartCount() > 0 && (
+            <div className="absolute -top-2 -right-2 bg-[#0D7A57] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+              {getCartCount()}
+            </div>
+          )}
         </Link>
-        <img
+
+        {/* Mobile Menu Button */}
+        <button
           onClick={() => setVisible(true)}
-          src={assets.img21}
-          className="w-3 sm:w-6  cursor-pointer sm:hidden"
-          alt=""
-        />
+          className="sm:hidden hover:opacity-75 transition-opacity duration-200"
+        >
+          <img src={assets.img21} className="w-5" alt="Menu" />
+        </button>
       </div>
 
-      {/* sidebar menu for small screens */}
-      <div
-        className={`absolute top-0 z-40 right-0 bottom-0 overflow-hidden bg-white transition-all ${
-          visible ? "w-full" : "w-0"
-        } `}
-      >
-        <div className="flex flex-col text-gray-600  ">
-          <div
-            onClick={() => setVisible(false)}
-            className="flex items-center gap-2 p-3 cursor-pointer"
-          >
-            <img src={assets.dropdownicon} className="h-4 rotate-180" alt="" />
-            <p>Back</p>
+      {/* Mobile Sidebar */}
+      <div className={`fixed inset-0 z-50 transition-all duration-300 ${visible ? 'visible' : 'invisible'}`}>
+        {/* Overlay */}
+        <div 
+          className={`absolute inset-0 bg-black transition-opacity duration-300 ${
+            visible ? 'opacity-50' : 'opacity-0'
+          }`}
+          onClick={() => setVisible(false)}
+        />
+
+        {/* Sidebar Content */}
+        <div className={`absolute top-0 right-0 h-full w-64 bg-white shadow-xl transform transition-transform duration-300 ${
+          visible ? 'translate-x-0' : 'translate-x-full'
+        }`}>
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b">
+            <h2 className="text-lg font-medium text-gray-800">Menu</h2>
+            <button 
+              onClick={() => setVisible(false)}
+              className="p-2 hover:bg-gray-100 rounded-full"
+            >
+              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
 
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 border pl-6  border-gray-200"
-            to="/"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 pl-6 border  border-gray-200"
-            to="/about"
-          >
-            About
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 pl-6 border border-gray-200"
-            to="/contact"
-          >
-            Contact
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 pl-6 border border-gray-200"
-            to="/login"
-          >
-            SignUp
-          </NavLink>
+          {/* Navigation Links */}
+          <nav className="p-4">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                onClick={() => setVisible(false)}
+                className={({ isActive }) =>
+                  `block px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-200 ${
+                    isActive ? 'bg-[#0D7A57]/10 text-[#0D7A57]' : ''
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+            
+            {!token && (
+              <NavLink
+                to="/login"
+                onClick={() => setVisible(false)}
+                className="mt-4 block px-4 py-2 text-center text-white bg-[#0D7A57] rounded-lg hover:bg-[#0D7A57]/90 transition-colors duration-200"
+              >
+                Sign In / Sign Up
+              </NavLink>
+            )}
+          </nav>
         </div>
       </div>
     </>
