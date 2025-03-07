@@ -43,27 +43,18 @@ Hosting: Vercel
 ✅ Professional Growth: Hands-on experience with Agile workflows, teamwork, and problem-solving under deadlines
 
 📂 Project Structure
-
-FoodExpress/
-│-- backend/
-│   ├── config/       # Configuration files (DB, JWT, etc.)
-│   ├── controllers/  # API Controllers
-│   ├── models/       # Mongoose Models
-│   ├── routes/       # API Routes
-│   ├── middleware/   # Authentication & Error Handling
-│   ├── server.js     # Entry point
-│
-│-- frontend/
-│   ├── src/
-│   │   ├── components/   # Reusable UI components
-│   │   ├── pages/        # Different pages (Home, Cart, Checkout, etc.)
-│   │   ├── context/      # State Management with Context API
-│   │   ├── App.js        # Main App Component
-│   │   ├── index.js      # Entry point
-│
-│-- .env                 # Environment variables
-│-- package.json         # Dependencies & Scripts
-│-- README.md            # Project Documentation
+Backend (Node.js + Express)
+config/ – Configuration files (DB connection, JWT, etc.)
+controllers/ – API Controllers for handling requests
+routes/ – API Routes for different functionalities
+middleware/ – Authentication & Error handling
+models/ – Mongoose models for database schema
+server.js – Entry point for the backend
+Frontend (React.js)
+components/ – Reusable UI components
+pages/ – Different pages for routing (Home, Cart, Checkout, etc.)
+context/ – State management using Context API
+App.js – Main App Component
 
 📜 Installation & Setup
 
