@@ -5,16 +5,75 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Wrapper from "../components/layout/Wrapper";
 import Carttotal from "../components/Carttotal";
 
-const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } =
-    useContext(ShopContext);
+const CartItem = ({ productData, item, currency, updateQuantity }) => (
+  <div className="bg-white rounded-lg p-4 mb-4 shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="flex items-start gap-6">
+      {/* Image */}
+      <div className="relative group">
+        <img
+          className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-lg"
+          src={productData.image[0]}
+          alt={productData.name}
+        />
+        <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 rounded-lg transition-colors duration-300"></div>
+      </div>
 
+      {/* Details */}
+      <div className="flex-1 min-w-0">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="text-lg sm:text-xl font-medium text-gray-800">
+              {productData.name}
+            </h3>
+            <div className="mt-2 flex items-center gap-3">
+              <span className="text-lg font-semibold text-[#0D7A57]">
+                {currency}{productData.price}
+              </span>
+              <span className="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-600">
+                {item.size}
+              </span>
+            </div>
+          </div>
+
+          {/* Remove Button */}
+          <button
+            onClick={() => updateQuantity(item._id, item.size, 0)}
+            className="text-gray-400 hover:text-red-500 transition-colors duration-300"
+          >
+            <Icon icon="icomoon-free:bin" className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Quantity Control */}
+        <div className="mt-4 flex items-center gap-3">
+          <label className="text-sm text-gray-600">Quantity:</label>
+          <div className="relative">
+            <input
+              type="number"
+              min="1"
+              defaultValue={item.quantity}
+              onChange={(e) =>
+                e.target.value === "" || e.target.value === "0"
+                  ? null
+                  : updateQuantity(item._id, item.size, Number(e.target.value))
+              }
+              className="w-20 px-3 py-2 border border-gray-200 rounded-lg text-center
+                       focus:border-[#0D7A57] focus:ring-1 focus:ring-[#0D7A57]/20 outline-none"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const Cart = () => {
+  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
     if (products.length > 0) {
       const tempData = [];
-
       for (const items in cartItems) {
         for (const item in cartItems[items]) {
           if (cartItems[items][item] > 0) {
@@ -26,126 +85,68 @@ const Cart = () => {
           }
         }
       }
-
       setCartData(tempData);
     }
-  }, [cartItems,products]);
+  }, [cartItems, products]);
 
   return (
-    <Wrapper>
-      <div className="border-t pt-14 p-4">
-        <div className="text-2xl mb-3">
-          <Title text1={"Your"} text2={"Cart"} />
-        </div>
+    <div className="bg-gray-50 min-h-screen">
+      <Wrapper>
+        <div className="py-12 px-4">
+          {/* Header */}
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <Title text1={"Your"} text2={"Cart"} />
+            <p className="mt-4 text-gray-600">
+              Review and manage your selected items
+            </p>
+          </div>
 
-        <div>
-          {cartData.map((item, index) => {
-            const productData = products.find(
-              (product) => product._id === item._id
-            );
-            return (
-              <div
-                key={index}
-                className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols[4fr_2fr_0.5fr] items-center gap-4"
-              >
-                <div className="flex  items-start gap-6">
-                  <img
-                    className="w-16 sm:w-20 "
-                    src={productData.image[0]}
-                    alt=""
-                  />
-                  <div>
-                    <p className="text-xs sm:text-lg font-medium">
-                      {productData.name}{" "}
-                    </p>
-
-                    <div className="flex items-center gap-5 mt-2">
-                      <p>
-                        {currency}
-                        {productData.price}
-                      </p>
-                      <p className="px-2 sm:px-3 sm:py-1 bg-slate-50">
-                        {item.size}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Product Details */}
-                  {/* <div className='flex-1 min-w-0'>
-                      <h3 className='text-lg font-medium text-gray-900 truncate'>{productData.name}</h3>
-                      <div className='mt-1 flex items-center gap-4'>
-                        <span className='text-lg font-medium text-pink-500'>{currency}{productData.price}</span>
-                        <span className='px-3 py-1 text-sm bg-gray-100 rounded-full'>{item.size}</span>
-                      </div> */}
-
-                  {/* Quantity Control */}
-                  {/* <div className='mt-4 flex items-center gap-4'> */}
-                  {/* <div className='flex items-center'>
-                          <label className='text-sm text-gray-600 mr-2'>Quantity:</label>
-                          <input
-                            type="number"
-                            min="1"
-                            defaultValue={item.quantity}
-                            onChange={(e) => e.target.value === '' || e.target.value === '0' 
-                              ? null 
-                              : updateQuantity(item._id, item.size, Number(e.target.value))}
-                            className='w-16 px-2 py-1 border border-gray-200 rounded-lg text-center
-                                     focus:border-pink-500 focus:ring-1 focus:ring-pink-200 outline-none'
-                          />
-                        </div> */}
-
-                  {/* Remove Button */}
-                  {/* <button
-                          onClick={() => updateQuantity(item._id, item.size, 0)}
-                          className='text-sm text-gray-500 hover:text-red-500 flex items-center gap-1
-                                   transition-colors duration-300'
-                        >
-                          <img className='w-4 h-4' src={assets.bin_icon} alt="Remove" />
-                          <span>Remove</span>
-                        </button> */}
+          {/* Cart Content */}
+          <div className="max-w-4xl mx-auto">
+            {cartData.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-500">Your cart is empty</p>
+                <button
+                  onClick={() => navigate('/collection')}
+                  className="mt-4 text-[#0D7A57] hover:text-[#0D7A57]/80 font-medium"
+                >
+                  Continue Shopping →
+                </button>
+              </div>
+            ) : (
+              <>
+                {/* Cart Items */}
+                <div className="space-y-4">
+                  {cartData.map((item, index) => (
+                    <CartItem
+                      key={index}
+                      productData={products.find((product) => product._id === item._id)}
+                      item={item}
+                      currency={currency}
+                      updateQuantity={updateQuantity}
+                    />
+                  ))}
                 </div>
 
-                <input
-                  onChange={(e) =>
-                    e.target.value === "" || e.target.value === "0"
-                      ? null
-                      : updateQuantity(
-                          item._id,
-                          item.size,
-                          Number(e.target.value)
-                        )
-                  }
-                  className="border outline-0 border-gray-300 rounded max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
-                  type="number"
-                  min={1}
-                  defaultValue={item.quantity}
-                />
-                {/* <img src="" alt="" /> */}
-                <Icon
-                  onClick={() => updateQuantity(item._id, item.size, 0)}
-                  className="w-4 mr-4 sm:w-12 cursor-pointer"
-                  icon="icomoon-free:bin"
-                />
-              </div>
-
-              // </div>
-              // </div>
-            );
-          })}
-        </div>
-
-        <div className="flex justify-end my-20">
-          <div className="w-full sm:w-[450px]">
-            <Carttotal />
-            <div className="w-full text-end">
-              <button onClick={()=>navigate('/place-order')} className="bg-[#0D7A57] text-white text-sm my-8 px-8 py-3 rounded">
-                Proceed to Checkout
-              </button>
-            </div>
+                {/* Cart Total and Checkout */}
+                <div className="mt-12 bg-white rounded-lg p-6 shadow-sm">
+                  <Carttotal />
+                  <div className="mt-6 text-right">
+                    <button
+                      onClick={() => navigate('/place-order')}
+                      className="bg-[#0D7A57] text-white px-8 py-3 rounded-lg hover:bg-[#0D7A57]/90 
+                               transform hover:scale-[1.02] transition-all duration-300 font-medium"
+                    >
+                      Proceed to Checkout
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </div>
   );
 };
 

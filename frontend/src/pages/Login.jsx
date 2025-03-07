@@ -22,13 +22,11 @@ const Login = () => {
           email,
           password,
         });
-        // console.log(response.data);
 
         if(response.data.success){
           setToken(response.data.token);
           localStorage.setItem('token',response.data.token);
-
-        }else{
+        } else {
           toast.error(response.data.message);
         }
       } else {
@@ -36,7 +34,7 @@ const Login = () => {
         if(response.data.success){
           setToken(response.data.token);
           localStorage.setItem('token',response.data.token);
-        }else{
+        } else {
           toast.error(response.data.message);
         }
       }
@@ -44,80 +42,137 @@ const Login = () => {
       console.log(error);
       toast.error(error.response.data.message);
     }
-
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     if(token){
       navigate('/');
     }
   },[token]);
 
-
   return (
     <Wrapper>
-      <form
-        onSubmit={onSubmitHandler}
-        className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-400 space-y-6 p-4 py-15"
-      >
-        {/* Name Input - Only for Sign Up */}
+      <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <form
+          onSubmit={onSubmitHandler}
+          className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-6 border border-gray-100"
+        >
+          {/* Header */}
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Welcome to <span className="text-[#0D7A57]">FoodExpress</span>
+            </h2>
+            <p className="text-gray-500 text-sm">
+              {currentState === "Login" 
+                ? "Sign in to continue to your account" 
+                : "Create a new account to get started"
+              }
+            </p>
+          </div>
 
-        <div className="inline-flex items-center gap-2 mb-2 mt-10">
-          <p className="prata-regular text-[#0D7A57] text-3xl">
-            {currentState}
-          </p>
-        </div>
-        {currentState === "Login" ? (
-          ""
-        ) : (
-          <input
-            onChange={(e) =>setName(e.currentTarget.value) }
-            type="text"
-            value={name}
-            className="w-full px-3 rounded-sm   py-2 border border-gray-500 "
-            placeholder="Name"
-            required
-          />
-        )}
-        <input
-          onChange={(e) => setEmail(e.currentTarget.value) }
-          type="email"
-          value={email}
-          className="w-full px-3 rounded-sm py-2 border border-gray-500 "
-          placeholder="Email"
-          required
-        />
-        <input
-          onChange={(e) => setPassword(e.currentTarget.value) }
-          type="password"
-          value={password}
-          className="w-full px-3 rounded-sm py-2 border border-gray-500 "
-          placeholder="Password"
-          required
-        />
-        <div className="w-full flex justify-between text-sm mt-[-8px]">
-          <p className="cursor-pointer">Forgot your password?</p>
-          {currentState === "Login" ? (
-            <p
-              className="cursor-pointer"
-              onClick={() => setCurrentState("Sign Up")}
+          {/* Form Fields */}
+          <div className="space-y-5">
+            {currentState === "Sign Up" && (
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  onChange={(e) => setName(e.currentTarget.value)}
+                  type="text"
+                  value={name}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D7A57]/20 focus:border-[#0D7A57] transition-all duration-300"
+                  placeholder="Enter your name"
+                  required
+                />
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                id="email"
+                onChange={(e) => setEmail(e.currentTarget.value)}
+                type="email"
+                value={email}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D7A57]/20 focus:border-[#0D7A57] transition-all duration-300"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                id="password"
+                onChange={(e) => setPassword(e.currentTarget.value)}
+                type="password"
+                value={password}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D7A57]/20 focus:border-[#0D7A57] transition-all duration-300"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Links */}
+          <div className="flex justify-between items-center text-sm">
+            <button 
+              type="button"
+              className="text-[#0D7A57] hover:text-[#0D7A57]/80 transition-colors duration-300"
             >
-              Create account
-            </p>
-          ) : (
-            <p
-              className="cursor-pointer"
-              onClick={() => setCurrentState("Login")}
+              Forgot password?
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrentState(currentState === "Login" ? "Sign Up" : "Login")}
+              className="text-[#0D7A57] hover:text-[#0D7A57]/80 transition-colors duration-300"
             >
-              Login Here
-            </p>
-          )}
-        </div>
-        <button className="bg-[#0D7A57] rounded-sm text-white font-light px-8 py-2 mt-4">
-          {currentState === "Login" ? "Sign In" : "Sign Up"}
-        </button>
-      </form>
+              {currentState === "Login" ? "Create account" : "Login here"}
+            </button>
+          </div>
+
+          {/* Submit Button */}
+          <div>
+            <button
+              type="submit"
+              className="w-full relative inline-flex items-center justify-center px-8 py-3.5 overflow-hidden text-white font-medium bg-[#0D7A57] rounded-lg group hover:scale-[1.02] transition-all duration-300"
+            >
+              <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-80 group-hover:h-80 opacity-10"></span>
+              <span className="relative flex items-center justify-center gap-2">
+                {currentState === "Login" ? (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    Sign In
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Sign Up
+                  </>
+                )}
+              </span>
+            </button>
+          </div>
+
+          {/* Bottom Decoration */}
+          <div className="pt-4">
+            <div className="relative">
+             
+              
+            </div>
+          </div>
+        </form>
+      </div>
     </Wrapper>
   );
 };
