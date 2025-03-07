@@ -20,7 +20,7 @@ const Testimonials = () => {
 
 <div className=" flex flex-col sm:flex-row space-x-9 p-4 sm:items-start  items-center">
  <div className='flex flex-col w-[300px] items-center sm:w-3/4   lg:w-2/4  ' >
- <h2 className=" text-2xl font-bold mb-4">Testimonials</h2>
+ <h2 className=" text-2xl text-[#0D7A57]  font-bold mb-4">Testimonials</h2>
  <p className="mb-4 font-medium text-gray-700 text-sm  lg:text-base items-center ml-9 ">These super foods are made with all fresh and organic products that can help you stay healthy. Plus they’re adjusted according to your taste to enjoy the food of your own choice.
  Our menu is a celebration of fresh, locally-sourced ingredients, expertly prepared to bring out the rich, authentic flavors of each dish. Whether you're indulging in one of our signature recipes or trying something new, you can expect an extraordinary culinary journey. From comforting classics to creative modern twists, our dishes are crafted with passion and dedication, ensuring that every bite leaves you craving more. Join us and savor the taste of quality, warmth, and hospitality.
 

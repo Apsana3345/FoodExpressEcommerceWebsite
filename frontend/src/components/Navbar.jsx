@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom'
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Add scroll event listener
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -30,21 +29,34 @@ const Navbar = () => {
           : 'bg-transparent'
       }`}>
         <Wrapper>
-          <div className='flex items-center justify-between py-5 p-4 font-medium'>
-            <Link to='/'>
-              <div className="flex items-center">
-                <img src={assets.img12} className="w-7" alt="" />
-                <p className="w-25 text-xl lg:text-2xl text-[#0D7A57]">FoodExpress</p>
-              </div>
+          <div className='flex items-center justify-between py-4 px-4'>
+            {/* Logo Section */}
+            <Link 
+              to='/'
+              className="flex items-center gap-2 hover:opacity-90 transition-opacity duration-200"
+            >
+              <img 
+                src={assets.img12} 
+                className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 object-contain" 
+                alt="FoodExpress Logo" 
+              />
+              <span className="text-xl xs:text-2xl sm:text-3xl font-semibold text-[#0D7A57]">
+                FoodExpress
+              </span>
             </Link>
 
-            <Navlist />
+            {/* Center Navigation */}
+            <div className="flex-1 flex justify-center">
+              <Navlist />
+            </div>
+
+            {/* Right Section */}
             <NavRight />
           </div>
         </Wrapper>
       </div>
-      {/* This div adds space below the fixed navbar */}
-      <div className="h-[84px]"></div>
+      {/* Spacer for fixed navbar */}
+      <div className="h-[72px] sm:h-[80px]"></div>
     </>
   )
 }

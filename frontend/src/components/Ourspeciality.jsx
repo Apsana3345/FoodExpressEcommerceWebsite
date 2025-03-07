@@ -8,10 +8,10 @@ const SpecialityComponent = () => {
 
   return (
     <Wrapper>
-      <div className="p-6 flex flex-col justify-center  ">
+      <div className="p-6 flex flex-col justify-center items-center  ">
         <Title text1={"Our"} text2={" Speciality"}/>
         
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5  gap-4 p-3">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5  gap-4 p-3 mt-7">
           <div 
             onMouseEnter={() => setHoveredImage(1)}
             onMouseLeave={() => setHoveredImage(null)}
@@ -89,17 +89,7 @@ const SpecialityComponent = () => {
                   <div className="absolute col-span-2 p-5 rounded-lg">
                     <h3 className="text-xl sm:text-3xl font-bold mb-2"> Enjoy FreshFruits</h3>
                     <p> Have  healthy fruits</p>
-                    {/* <p className="text-xl font-bold">Rs 240 <span className="line-through text-red-500">Rs 270</span></p>
-                    <div className="mt-2">
-                      <label className="block">Quantity:</label>
-                      <input
-                        type="number" 
-                        min="1"
-                        defaultValue="1"
-                        className="border border-gray-300 p-2 rounded w-20"
-                      />
-                    </div>
-                    <button    className="mt-4 bg-[#0D7A57] text-white px-4 py-2 rounded">Add to cart</button> */}
+                    
                   </div>
                 </div>
               )}

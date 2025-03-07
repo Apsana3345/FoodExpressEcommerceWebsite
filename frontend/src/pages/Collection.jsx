@@ -202,13 +202,13 @@ const Collection = () => {
 
       <div className="flex-1">
         <div className="flex justify-between items-center mb-12">
-          <Title text1={"All "} text2={"Food"} />
+          <Title   text1={"All "} text2={"Food"} />
 
           {/* Sort foods*/}
           <select
             onChange={(e) => setSortType(e.target.value)}
-            className=" border border-gray-300 rounded text-sm 
-                     focus:outline-none px-2 "
+            className=" border border-gray-300 rounded sm:text-base text-sm 
+                     focus:outline-none px-2 py-1 ml-1  "
           >
             <option value="relavant">Sort by: Relavant</option>
             <option value="high-low">Sort by: High to Low</option>
@@ -217,7 +217,7 @@ const Collection = () => {
         </div>
 
         {/*  products mapping */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 gap-y-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 gap-y-6">
           {filterProducts.map((item, index) => (
             <ProductItems
               key={index}

@@ -19,27 +19,37 @@ const NavRight = () => {
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
-    { path: "/collection", label: "Menu" },
+    { path: "/collection", label: "Our Food" },
   ];
 
   return (
     <>
-      <div className="flex items-center gap-4 sm:gap-8">
+      <div className="flex items-center justify-end gap-3 xs:gap-4 sm:gap-8">
         {/* Search Icon */}
-        <button 
-          onClick={() => setShowSearch(true)}
-          className="hover:opacity-75 transition-opacity duration-200"
-        >
-          <img src={assets.img16} className="w-5 sm:w-6 cursor-pointer" alt="Search" />
-        </button>
+        <div className="flex items-center h-7 sm:h-6">
+          <button 
+            onClick={() => setShowSearch(true)}
+            className="hover:opacity-75 transition-opacity duration-200"
+          >
+            <img 
+              src={assets.img16} 
+              className="w-6 h-6 sm:w-6 sm:h-6 object-contain" 
+              alt="Search" 
+            />
+          </button>
+        </div>
 
         {/* Profile Section */}
-        <div className="relative group">
+        <div className="relative group flex items-center h-7 sm:h-6">
           <button 
             onClick={() => token ? null : navigate('/login')}
             className="hover:opacity-75 transition-opacity duration-200"
           >
-            <img className="w-5 sm:w-6 cursor-pointer" src={assets.profileicon} alt="Profile" />
+            <img 
+              className="w-6 h-6 sm:w-6 sm:h-6 object-contain" 
+              src={assets.profileicon} 
+              alt="Profile" 
+            />
           </button>
 
           {/* Profile Dropdown */}
@@ -69,7 +79,7 @@ const NavRight = () => {
                     Orders
                   </button>
                   <button 
-                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                    className="w-full px-4 py-2 text-left text-sm text-[#0D7A57]  hover:bg-red-50 flex items-center gap-2"
                     onClick={logout}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,22 +94,34 @@ const NavRight = () => {
         </div>
 
         {/* Cart Icon */}
-        <Link to="/cart" className="relative hover:opacity-75 transition-opacity duration-200">
-          <img src={assets.carticon} className="w-5 sm:w-6" alt="Cart" />
-          {getCartCount() > 0 && (
-            <div className="absolute -top-2 -right-2 bg-[#0D7A57] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-              {getCartCount()}
-            </div>
-          )}
-        </Link>
+        <div className="flex items-center h-7 sm:h-6">
+          <Link to="/cart" className="relative hover:opacity-75 transition-opacity duration-200">
+            <img 
+              src={assets.carticon} 
+              className="w-6 h-6 sm:w-6 sm:h-6 object-contain" 
+              alt="Cart" 
+            />
+            {getCartCount() > 0 && (
+              <div className="absolute -top-2 -right-2 bg-[#0D7A57] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {getCartCount()}
+              </div>
+            )}
+          </Link>
+        </div>
 
         {/* Mobile Menu Button */}
-        <button
-          onClick={() => setVisible(true)}
-          className="sm:hidden hover:opacity-75 transition-opacity duration-200"
-        >
-          <img src={assets.img21} className="w-5" alt="Menu" />
-        </button>
+        <div className="flex items-center h-7 sm:h-6 sm:hidden">
+          <button
+            onClick={() => setVisible(true)}
+            className="hover:opacity-75 transition-opacity duration-200"
+          >
+            <img 
+              src={assets.img21} 
+              className="w-5 h-5 sm:w-6 sm:h-6 object-contain" 
+              alt="Menu" 
+            />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Sidebar */}
