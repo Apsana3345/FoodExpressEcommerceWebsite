@@ -30,7 +30,6 @@ const Navbar = () => {
       }`}>
         <Wrapper>
           <div className='flex items-center justify-between py-4 px-4'>
-            {/* Logo Section */}
             <Link 
               to='/'
               className="flex items-center gap-2 hover:opacity-90 transition-opacity duration-200"
